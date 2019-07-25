@@ -13,7 +13,7 @@ public class Categoria {
 	private Integer id;
 	private String nome;
 	
-	@Deprecated //apenas para o Hibernat utilizar este construtor
+	@Deprecated //apenas para o Hibernat utilizar este construtor.
 	public Categoria() {
 		
 		//sobrescrevendo o Construtor Default
