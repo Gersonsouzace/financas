@@ -1,9 +1,12 @@
 package br.com.caelum.financas.modelo;
 
-import javax.persistence.Entity; 
+import java.util.List;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity //Anotação para falara que usar a classe como persistencia com HIBERNATE
 public class Conta {
@@ -16,6 +19,8 @@ public class Conta {
 	private String banco;
 	private String agencia;
 	
+	@OneToMany (mappedBy = "conta") //mapeando o relacionamento para que nao seja criado uma nova tabela.
+	private List<Movimentacao> movimentacoes;
 	
 	
 	
@@ -49,6 +54,10 @@ public class Conta {
 	}
 	public void setAgencia(String agencia) {
 		this.agencia = agencia;
+	}
+	public List<Movimentacao> getMovimentacoes() {
+		// TODO Auto-generated method stub
+		return movimentacoes;
 	}
 	
 	
