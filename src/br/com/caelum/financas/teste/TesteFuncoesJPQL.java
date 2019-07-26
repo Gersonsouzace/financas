@@ -1,11 +1,12 @@
 package br.com.caelum.financas.teste;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-
+import br.com.caelum.financas.dao.MovimentacaoDAO;
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
 import br.com.caelum.financas.util.JPAUtil;
@@ -21,16 +22,14 @@ public class TesteFuncoesJPQL {
 		em.getTransaction().begin();
 		
 		
-		String jpql = "select sum(m.valor) from Movimentacao m where m.conta = :pConta " +
-		"and m.tipo = :pTipo order by m.valor desc";
-		
-		Query query = em.createQuery(jpql);	
-		query.setParameter("pConta", conta);
-		query.setParameter("pTipo", TipoMovimentacao.SAIDA);
-		
-		BigDecimal soma = (BigDecimal) query.getSingleResult(); 
-
-		System.out.println("A soma é:" + soma);
+		MovimentacaoDAO dao = new MovimentacaoDAO(em);
+//		dao.setEm(em);
+		List<Double> medias = dao.getMediasPorDiaETipo(TipoMovimentacao.SAIDA, conta);
+				
+		for(Double media : medias) {
+			
+			System.out.println("A media é:" + media);
+		}
 		
 		em.getTransaction().commit();
 		em.close();
