@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,7 +34,7 @@ public class Movimentacao {
 	private Calendar data;
 	private String descricao;
 	
-	@ManyToOne
+	@ManyToOne 
 	private Conta conta;
 	
 	@ManyToMany

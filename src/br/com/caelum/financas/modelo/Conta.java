@@ -2,11 +2,14 @@ package br.com.caelum.financas.modelo;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity //Anotação para falara que usar a classe como persistencia com HIBERNATE
 public class Conta {
@@ -19,7 +22,8 @@ public class Conta {
 	private String banco;
 	private String agencia;
 	
-	@OneToMany (mappedBy = "conta") //mapeando o relacionamento para que nao seja criado uma nova tabela.
+	@OneToMany  (mappedBy = "conta") //mapeando o relacionamento para que nao seja criado uma nova tabela.
+	
 	private List<Movimentacao> movimentacoes;
 	
 	

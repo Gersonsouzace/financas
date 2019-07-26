@@ -1,17 +1,17 @@
 package br.com.caelum.financas.teste;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+
 import br.com.caelum.financas.modelo.Conta;
-import br.com.caelum.financas.modelo.Movimentacao;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
 import br.com.caelum.financas.util.JPAUtil;
 
-public class TesteJPQL {
-	
+public class TesteFuncoesJPQL {
+
 	public static void main(String[] args) {
 		
 		Conta conta = new Conta();
@@ -21,27 +21,18 @@ public class TesteJPQL {
 		em.getTransaction().begin();
 		
 		
-		String jpql = "select m from Movimentacao m where m.conta=:pConta" +
-						" and m.tipo = :pTipo order by m.valor desc";
+		String jpql = "select sum(m.valor) from Movimentacao m where m.conta = :pConta " +
+		"and m.tipo = :pTipo order by m.valor desc";
 		
-		
-		
-		Query query = em.createQuery(jpql);
+		Query query = em.createQuery(jpql);	
 		query.setParameter("pConta", conta);
 		query.setParameter("pTipo", TipoMovimentacao.SAIDA);
 		
-		List<Movimentacao> resultados = query.getResultList();
-		
-		
-		for (Movimentacao movimentacao : resultados) {
-			
-			System.out.println("Descrição:" + movimentacao.getDescricao());
-			System.out.println("Conta.Id:" + movimentacao.getConta().getId());
+		BigDecimal soma = (BigDecimal) query.getSingleResult(); 
 
-		}
+		System.out.println("A soma é:" + soma);
 		
 		em.getTransaction().commit();
 		em.close();
 	}
-
 }

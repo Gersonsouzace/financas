@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.CascadeType;
 
 import br.com.caelum.financas.modelo.Categoria;
 import br.com.caelum.financas.modelo.Movimentacao;
@@ -12,6 +13,7 @@ import br.com.caelum.financas.util.JPAUtil;
 public class TestaMovimentacoesPorCategoria {
 
 	public static void main(String[] args) {
+		
 
 		Categoria categoria = new Categoria();
 		categoria.setId(1);
@@ -19,8 +21,8 @@ public class TestaMovimentacoesPorCategoria {
 		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 
-		String jpql = "select m from Movimentacao m where join m.categoria c where c = :pCategoria";
-
+		String jpql = "select m from Movimentacao m join m.categoria c where c = :pCategoria";
+				    
 		Query query = em.createQuery(jpql);
 		query.setParameter("pCategoria", categoria);
 		
@@ -32,9 +34,9 @@ public class TestaMovimentacoesPorCategoria {
 			System.out.println("Conta.Id:" + movimentacao.getConta().getId());
 
 		}
-
+		
 		em.getTransaction().commit();
 		em.close();
-
+		
 	}
 }
